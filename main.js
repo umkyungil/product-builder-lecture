@@ -1,30 +1,50 @@
 const THEME_KEY = "theme";
-const root = document.documentElement;
-const toggleButton = document.getElementById("theme-toggle");
 
-function applyTheme(theme) {
-  root.setAttribute("data-theme", theme);
-  if (toggleButton) {
-    toggleButton.textContent = theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode";
+function safeGetTheme() {
+  try {
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    if (savedTheme === "dark" || savedTheme === "light") {
+      return savedTheme;
+    }
+  } catch (error) {
+    // localStorage may be blocked in some environments.
+  }
+
+  try {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  } catch (error) {
+    return "light";
   }
 }
 
-function getInitialTheme() {
-  const savedTheme = localStorage.getItem(THEME_KEY);
-  if (savedTheme === "dark" || savedTheme === "light") {
-    return savedTheme;
+function safeSaveTheme(theme) {
+  try {
+    localStorage.setItem(THEME_KEY, theme);
+  } catch (error) {
+    // Ignore storage errors and keep in-memory behavior.
   }
-
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
-let currentTheme = getInitialTheme();
-applyTheme(currentTheme);
+function applyTheme(theme, button) {
+  const isDark = theme === "dark";
+  document.body.classList.toggle("dark-mode", isDark);
+  if (button) {
+    button.textContent = isDark ? "Switch to Light Mode" : "Switch to Dark Mode";
+  }
+}
 
-if (toggleButton) {
+document.addEventListener("DOMContentLoaded", () => {
+  const toggleButton = document.getElementById("theme-toggle");
+  if (!toggleButton) {
+    return;
+  }
+
+  let currentTheme = safeGetTheme();
+  applyTheme(currentTheme, toggleButton);
+
   toggleButton.addEventListener("click", () => {
     currentTheme = currentTheme === "dark" ? "light" : "dark";
-    localStorage.setItem(THEME_KEY, currentTheme);
-    applyTheme(currentTheme);
+    safeSaveTheme(currentTheme);
+    applyTheme(currentTheme, toggleButton);
   });
-}
+});
