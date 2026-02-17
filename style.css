@@ -1,51 +1,55 @@
-* {
-  box-sizing: border-box;
-}
-
 body {
-  margin: 0;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-height: 100vh;
-  display: grid;
-  place-items: center;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #ffffff;
-  color: #111827;
-  transition: background-color 180ms ease, color 180ms ease;
-}
-
-body.dark-mode {
-  background-color: #0b1020;
-  color: #e5e7eb;
+  background-color: #f0f0f0;
 }
 
 .container {
-  width: min(90vw, 540px);
-  padding: 24px;
-  border-radius: 12px;
-  background-color: #f3f4f6;
   text-align: center;
-  transition: background-color 180ms ease;
-}
-
-body.dark-mode .container {
-  background-color: #172036;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
   margin-top: 0;
 }
 
-#theme-toggle {
-  border: 0;
-  padding: 10px 16px;
-  border-radius: 8px;
+#lotto-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  font-weight: 600;
-  background-color: #111827;
-  color: #f9fafb;
+  font-size: 1rem;
 }
 
-body.dark-mode #theme-toggle {
-  background-color: #e5e7eb;
-  color: #111827;
+#lotto-button:hover {
+  background-color: #45a049;
+}
+
+.lotto-numbers-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.lotto-number {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #e0e0e0; /* 변경: 배경색을 더 잘보이게 수정 */
+  border: 1px solid #ccc; /* 추가: 테두리 추가 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 5px;
+  color: #333;
 }
